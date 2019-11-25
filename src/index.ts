@@ -25,8 +25,8 @@ export const Superbot = (routes: Route[], initialHistory: History[] = []) => {
     onHistory: (cb: Function): void => {
       historyCallback = cb;
     },
-    beforeMessage: () => {
-
-    },
   };
 };
+
+// TODO: /command => remove
+// TODO: middleware => pass in props
