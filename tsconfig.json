@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es5",       
+    "module": "commonjs", 
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "noImplicitAny": false,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "declaration": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "typings/index.d.ts",
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

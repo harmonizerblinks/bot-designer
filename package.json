@@ -1,0 +1,39 @@
+{
+  "name": "superbot",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "NODE_ENV=development nodemon",
+    "lint": "eslint --ext .ts ./",
+    "pre-commit-message": "echo 'Please wait, running pre-commit checks...' && exit 0",
+    "test": "echo \"No tests specified!\" && exit 0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pre-commit-message && npm run lint && npm test"
+    }
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "mutablestate.js": "^0.2.6",
+    "node-telegram-bot-api": "^0.40.0",
+    "twilio": "^3.37.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/morgan": "^1.7.37",
+    "@types/node": "^12.11.7",
+    "@types/node-telegram-bot-api": "^0.31.1",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
+    "eslint": "^6.7.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "husky": "^3.0.9",
+    "nodemon": "^1.19.4",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
+  }
+}
