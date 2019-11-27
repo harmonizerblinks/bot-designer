@@ -1,7 +1,7 @@
 import { MutableState } from 'mutablestate.js/dist/interface';
 import { CustomObject } from '../utils/misc.interface';
 import {
-  Route, HistoryLifecyle, Render, MessageOptions, DefaultProps,
+  Route, HistoryLifecyle, Render, MessageOptions, DefaultProps, Middleware,
 } from './render.interface';
 import { History } from './history.interface';
 import { getUserHistory, createUserHistory, updateUserHistory } from './history';
@@ -27,24 +27,26 @@ export const render = (historyState: MutableState<History[]>, routes: Route[],
     if (route.middleware) {
       (async () => {
         try {
-          for (let i = 0; i < route.middleware.length; i += 1) {
-            const m = route.middleware[i];
-    
+          const middleware: Middleware[] = route.middleware as any;
+
+          for (let i = 0; i < middleware.length; i += 1) {
+            const m = middleware[i];
+
             if (typeof m !== 'function') {
               return Promise.resolve();
             }
-    
+
             let shouldContinue: boolean = false;
-    
-            await m(updatedProps, (moreProps: CustomObject): void => {
-              updatedProps = { ...updatedProps, ...moreProps };
+
+            await m(updatedProps, (moreProps?: CustomObject): void => {
+              updatedProps = { ...updatedProps, ...(moreProps || {}) };
               shouldContinue = true;
-    
-              if (i + 1 === route.middleware.length) {
+
+              if (i + 1 === middleware.length) {
                 route.component(updatedProps as any);
               }
             });
-    
+
             if (!shouldContinue) {
               break;
             }

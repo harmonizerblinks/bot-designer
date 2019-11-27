@@ -89,7 +89,7 @@ export const routes: Route[] = [
           props.onSendMessage('id: Not allowed');
           return;
         }
-  
+
         next({ username: 'lorem' });
       },
       async (props, next) => {
@@ -99,9 +99,9 @@ export const routes: Route[] = [
           props.onSendMessage('username: Not allowed');
           return;
         }
-  
+
         next();
-      }
+      },
     ],
     component: (props: CustomProps) => {
       props.onSendMessage('Welcome home :)', {
