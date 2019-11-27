@@ -1,11 +1,9 @@
-import { Route, DefaultProps } from '../src/main/render.interface';
+import { Route, DefaultProps, isEmptyObject } from '../src';
+import { delay } from './utils';
 
 interface CustomProps extends DefaultProps {
   userId: number;
 }
-
-export const isEmpty = (obj: any): boolean => (Object as any).entries(obj).length === 0
-  && obj.constructor === Object;
 
 export const routes: Route[] = [
   {
@@ -15,20 +13,22 @@ export const routes: Route[] = [
     },
   },
   {
-    path: '/menu',
+    path: 'menu',
+    aliases: ['start'],
     component: (props) => {
       props.onSendMessage('Hi there! \nHow can I help you today? :)');
     },
   },
   {
-    path: '/signup',
-    component: prop => {
+    path: 'signup',
+    aliases: ['sign up', 'create account'],
+    component: (prop) => {
       if (prop.text === 'cancel') {
         prop.history.unlock();
         prop.history.setState({});
       }
 
-      if (isEmpty(prop.history.getState())) {
+      if (isEmptyObject(prop.history.getState())) {
         prop.history.lock();
         prop.onSendMessage('Please enter your username');
 
@@ -56,7 +56,7 @@ export const routes: Route[] = [
 
       if (prop.history.getState().step === 'REQUEST_EMAIL') {
         // validate
-        
+
         prop.history.setState({
           ...prop.history.getState(),
           emailAddress: prop.text,
@@ -68,41 +68,41 @@ export const routes: Route[] = [
         prop.history.setState({});
 
         prop.onSendMessage(`Hi username: ${username} email: ${emailAddress}`);
-
-        return;
       }
     },
   },
   {
-    path: '/login',
-    alias: '/signin',
-    models: [
-      /(\blogin\b)/i,
-      /(\blog\b)[\w\-\s]+(\bin\b)/i,
-    ],
+    path: 'login',
+    aliases: ['log in', 'signin', 'sign in'],
     component: async (props) => {
-      const login = (): Promise<string> => new Promise((resolve) => {
-        setTimeout(() => {
-          resolve('Logged in successfully :)');
-        }, 1000);
-      });
-
       props.onSendMessage('Logging you in...');
 
-      const msg = await login();
-      props.onSendMessage(msg);
+      await delay(2000);
+      props.onSendMessage('Logged in successfully :)');
     },
   },
   {
-    path: '/home',
-    middleware: (props) => {
-      if (!props.userId) {
-        props.onSendMessage('Not allowed');
-        return false;
-      }
+    path: 'home',
+    middleware: [
+      async (props, next) => {
+        if (!props.userId) {
+          props.onSendMessage('id: Not allowed');
+          return;
+        }
+  
+        next({ username: 'lorem' });
+      },
+      async (props, next) => {
+        await delay();
 
-      return true;
-    },
+        if (!props.username) {
+          props.onSendMessage('username: Not allowed');
+          return;
+        }
+  
+        next();
+      }
+    ],
     component: (props: CustomProps) => {
       props.onSendMessage('Welcome home :)', {
         parse_mode: 'Markdown',
@@ -125,9 +125,9 @@ export const routes: Route[] = [
     },
   },
   {
-    path: '/bypass',
+    path: 'bypass',
     component: (props) => {
-      props.render('/home', { userId: 123 });
+      props.render('home', { userId: 123 });
     },
   },
 ];

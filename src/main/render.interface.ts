@@ -4,11 +4,12 @@ export type Render = (text?: string, props?: CustomObject) => void;
 
 export interface Route {
   path: string;
-  alias?: string;
-  models?: RegExp[];
-  middleware?(props: CustomObject): boolean;
+  aliases?: string[];
+  middleware?: Middleware[];
   component(props: DefaultProps): void;
 }
+
+export type Middleware = (props: CustomObject, next: (props?: CustomObject) => void) => void;
 
 export interface HistoryLifecyle {
   getLockStatus(): boolean;

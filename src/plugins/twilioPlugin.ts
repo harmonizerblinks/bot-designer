@@ -1,37 +1,16 @@
-import express, { Request, Response, Application } from 'express';
-import morgan from 'morgan';
-import cors from 'cors';
-import bodyParser from 'body-parser';
+import { Request, Response, Application } from 'express';
 import twilio, { Twilio } from 'twilio';
 import { MessageInstance } from 'twilio/lib/rest/api/v2010/account/message';
-import { TwilioCredentials } from './whatsapp.interface';
 
 // https://www.twilio.com/docs/sms/whatsapp/quickstart/node?code-sample=code-send-a-message-with-whatsapp-and-nodejs&code-language=Node.js&code-sdk-version=3.x
 // https://www.twilio.com/console/sms/whatsapp/sandbox
 // https://www.twilio.com/docs/sms/whatsapp/api
 
-export const setupWhatsapp = (credentials: TwilioCredentials, app: Application = null,
-  port: number = 3000, cb: Function): void => {
-  let expressApplication = app;
-
-  const { channel: twilioChannel, accountSid, authToken } = credentials;
+export const twilioPlugin = (twilioChannel: string, accountSid: string,
+  authToken: string) => (app: Application, cb: Function): void => {
   const client = twilio(accountSid, authToken);
 
-  if (!expressApplication) {
-    expressApplication = express();
-
-    expressApplication.use(morgan('tiny'));
-
-    expressApplication.use(cors());
-
-    expressApplication.use(bodyParser.json());
-    expressApplication.use(bodyParser.urlencoded({ extended: false }));
-
-    const PORT = process.env.PORT || port;
-    expressApplication.listen(PORT, () => console.log(`[✓] Running on port ${PORT}`));
-  }
-
-  expressApplication.post('/webhook/messages', MessageHandler(client, twilioChannel, cb));
+  app.post('/webhook/whatsapp', MessageHandler(client, twilioChannel, cb));
 };
 
 const MessageHandler = (client: Twilio, twilioChannel: string, cb: Function) => (req: Request,

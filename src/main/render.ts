@@ -5,7 +5,7 @@ import {
 } from './render.interface';
 import { History } from './history.interface';
 import { getUserHistory, createUserHistory, updateUserHistory } from './history';
-import { isPath, getRouteForPath, guesstimateRouteForPath } from './utils';
+import { guesstimateRoute, isCommand } from './utils';
 
 export const render = (historyState: MutableState<History[]>, routes: Route[],
   primaryProps: MessageOptions): Render => (text = primaryProps.text, secondaryProps = {}) => {
@@ -21,14 +21,41 @@ export const render = (historyState: MutableState<History[]>, routes: Route[],
     history: createHistoryLifecycle(historyState, userHistory, from),
   };
 
-  if (route && route.component && typeof route.component === 'function') {
-    if (route.middleware && typeof route.middleware === 'function') {
-      if (!route.middleware(props)) {
-        return;
-      }
-    }
+  let updatedProps: CustomObject = props;
 
-    route.component(props);
+  if (route && route.component && typeof route.component === 'function') {
+    if (route.middleware) {
+      (async () => {
+        try {
+          for (let i = 0; i < route.middleware.length; i += 1) {
+            const m = route.middleware[i];
+    
+            if (typeof m !== 'function') {
+              return Promise.resolve();
+            }
+    
+            let shouldContinue: boolean = false;
+    
+            await m(updatedProps, (moreProps: CustomObject): void => {
+              updatedProps = { ...updatedProps, ...moreProps };
+              shouldContinue = true;
+    
+              if (i + 1 === route.middleware.length) {
+                route.component(updatedProps as any);
+              }
+            });
+    
+            if (!shouldContinue) {
+              break;
+            }
+          }
+        } catch (err) {
+          throw err;
+        }
+      })();
+    } else {
+      route.component(props);
+    }
   } else {
     throw new Error('Invalid route: Missing component');
   }
@@ -51,20 +78,23 @@ const createHistoryForUserIfDoesNotExist = (historyState: MutableState<History[]
 const getRoute = (historyState: MutableState<History[]>, routes: Route[], userHistory: History,
   entityRef: string, text: string): Route => {
   let route: Route;
+  let newHistory: History[];
 
-  if (isPath(text)) {
-    route = getRouteForPath(routes, text);
+  if (isCommand(text) || !userHistory.locked) {
+    route = guesstimateRoute(routes, text);
+    newHistory = updateUserHistory(historyState.get(), entityRef, {
+      path: route.path,
+      locked: false,
+      state: {},
+    });
   } else {
-    route = userHistory.locked
-      ? getRouteForPath(routes, userHistory.path)
-      : guesstimateRouteForPath(routes, text);
+    route = guesstimateRoute(routes, userHistory.path);
+    newHistory = updateUserHistory(historyState.get(), entityRef, {
+      path: route.path,
+      locked: true,
+      state: userHistory.state,
+    });
   }
-
-  const newHistory = updateUserHistory(historyState.get(), entityRef, {
-    path: route.path,
-    locked: isPath(text) ? false : userHistory.locked,
-    state: userHistory.locked ? userHistory.state : {},
-  });
 
   historyState.set(newHistory);
 

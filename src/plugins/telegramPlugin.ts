@@ -1,9 +1,8 @@
+import { Application } from 'express';
 import TelegramBot, { Message, SendMessageOptions } from 'node-telegram-bot-api';
-import { TelegramCredentials } from './telegram.interface';
 
-export const setupTelegram = (credentials: TelegramCredentials, cb: Function) => {
-  const { token, allowPolling } = credentials;
-  const bot = new TelegramBot(token, { polling: allowPolling });
+export const telegramPlugin = (token: string) => (app: Application, cb: Function): void => {
+  const bot = new TelegramBot(token, { polling: true });
 
   bot.on('message', (msg: Message): void => {
     const { text: rawText, from: { id: chatId } } = msg;
@@ -29,3 +28,9 @@ const sendMessage = async (bot: TelegramBot, chatId: string | number, text: stri
     throw err;
   }
 };
+
+// import axios from 'axios';
+
+// const BASE_URL = 'https://api.telegram.org/bot';
+// const token = '';
+// const url = `${BASE_URL}${token}/method`;
