@@ -1,6 +1,6 @@
 import { createMutableState } from 'mutablestate.js';
 import { Application } from 'express';
-import { Route, MessageOptions } from './render.interface';
+import { Route, MessageCallback } from './render.interface';
 import { render } from './render';
 import { History } from './history.interface';
 import { startExpressServer } from '../utils/startExpressServer';
@@ -15,8 +15,6 @@ export const Superbot = (expressApplication?: Application) => {
   let historyCB: Function = () => {};
   historyState.onChange((h: History[]): void => historyCB(h));
 
-  const messageCB = (opts: MessageOptions): void => render(historyState, routesState.get(), opts)();
-
   return {
     setRoutes: (routes: Route[]): void => {
       routesState.set(routes);
@@ -28,7 +26,8 @@ export const Superbot = (expressApplication?: Application) => {
       historyCB = cb;
     },
     use: (plugin: Plugin): void => {
-      plugin(app, messageCB);
+      const messageCallback: MessageCallback = (opts) => render(historyState, routesState.get(), opts)();
+      plugin(app, messageCallback);
     },
   };
 };

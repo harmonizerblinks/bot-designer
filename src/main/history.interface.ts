@@ -2,7 +2,7 @@ import { CustomObject } from '../utils/misc.interface';
 
 export interface History {
   id: number;
-  entityRef: string;
+  entityRef: string | number;
   path: string;
   locked: boolean;
   state: CustomObject;

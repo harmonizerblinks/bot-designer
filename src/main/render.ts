@@ -64,7 +64,7 @@ export const render = (historyState: MutableState<History[]>, routes: Route[],
 };
 
 const createHistoryForUserIfDoesNotExist = (historyState: MutableState<History[]>,
-  entityRef: string) => {
+  entityRef: string | number) => {
   let userHistory: History = getUserHistory(historyState.get(), entityRef) as History;
 
   if (!userHistory) {
@@ -78,7 +78,7 @@ const createHistoryForUserIfDoesNotExist = (historyState: MutableState<History[]
 };
 
 const getRoute = (historyState: MutableState<History[]>, routes: Route[], userHistory: History,
-  entityRef: string, text: string): Route => {
+  entityRef: string | number, text: string): Route => {
   let route: Route;
   let newHistory: History[];
 
@@ -104,7 +104,7 @@ const getRoute = (historyState: MutableState<History[]>, routes: Route[], userHi
 };
 
 const createHistoryLifecycle = (historyState: MutableState<History[]>, userHistory: History,
-  entityRef: string): HistoryLifecyle => ({
+  entityRef: string | number): HistoryLifecyle => ({
   getLockStatus: () => userHistory.locked,
   lock: (): void => {
     const newHistory = updateUserHistory(historyState.get(), entityRef, { locked: true });

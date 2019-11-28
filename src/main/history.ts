@@ -2,9 +2,9 @@ import { CustomObject } from '../utils/misc.interface';
 import { History } from './history.interface';
 
 export const getUserHistory = (history: History[],
-  entityRef: string): History | undefined => history.find((h) => h.entityRef === entityRef);
+  entityRef: string | number): History | undefined => history.find((h) => h.entityRef === entityRef);
 
-export const createUserHistory = (history: History[], entityRef: string): History[] => [
+export const createUserHistory = (history: History[], entityRef: string | number): History[] => [
   ...history,
   {
     id: history.length + 1,
@@ -17,7 +17,7 @@ export const createUserHistory = (history: History[], entityRef: string): Histor
   },
 ];
 
-export const updateUserHistory = (history: History[], entityRef: string,
+export const updateUserHistory = (history: History[], entityRef: string | number,
   data: CustomObject): History[] => history.map((h) => {
   if (h.entityRef === entityRef) {
     return {
