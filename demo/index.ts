@@ -13,3 +13,5 @@ superbot.use(whatsappPlugin('whatsapp:+14155238886', 'AC1d8f5cd7cbef961c76cbe728
 superbot.use(telegramPlugin('820530445:AAHVfl2S89L3kVNji9s93qUjxRba2myyKVo'));
 
 superbot.use(ussdPlugin());
+
+superbot.onHistory((h: any) => console.log(h));
