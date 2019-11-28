@@ -1,3 +1,4 @@
+import { Application } from 'express';
 import { SendMessageOptions } from 'node-telegram-bot-api';
 import { CustomObject } from '../utils/misc.interface';
 
@@ -41,3 +42,4 @@ export interface DefaultProps extends MessageOptions {
 }
 
 export type MessageCallback = (opts: MessageOptions) => void;
+export type Plugin = (app: Application, cb: MessageCallback) => void;

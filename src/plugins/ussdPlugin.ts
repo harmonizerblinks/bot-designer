@@ -2,32 +2,32 @@ import { Request, Response, Application } from 'express';
 import { ussdRouter } from 'ussd-router';
 import { MessageCallback } from '../main/render.interface';
 
-export const ussdPlugin = () => (app: Application, cb: MessageCallback): void => {
-  app.post('/webhook/ussd', MessageHandler(cb));
-};
-
 const MessageHandler = (cb: MessageCallback) => (req: Request,
   res: Response): void => {
   const { phoneNumber: from, text: rawText } = req.body;
-  const text = ussdRouter(rawText.trim(), '0', '00') || 'start';
+  const formattedText = ussdRouter(rawText.trim(), '0', '00') || 'start';
 
   cb({
     from,
-    text,
+    text: formattedText,
     channel: 'USSD',
-    onSendMessage: (msg, opts) => {
+    onSendMessage: (text, opts) => {
       const sendingOptions = (opts && opts.ussd) || { type: 'CON' };
-      let formattedMsg = sendingOptions.type === 'CON'
-        ? `CON ${msg}`
-        : `END ${msg}`;
+      let msg = sendingOptions.type === 'CON'
+        ? `CON ${text}`
+        : `END ${text}`;
 
-      if (text !== 'start' && sendingOptions.type !== 'END') {
-        formattedMsg += '\n\n00: Back';
-        formattedMsg += '\n0: Home';
+      if (formattedText !== 'start' && sendingOptions.type !== 'END') {
+        msg += '\n\n00: Back';
+        msg += '\n0: Home';
       }
 
-      res.send(formattedMsg);
+      res.send(msg);
       return Promise.resolve();
     },
   });
+};
+
+export const ussdPlugin = () => (app: Application, cb: MessageCallback): void => {
+  app.post('/webhook/ussd', MessageHandler(cb));
 };

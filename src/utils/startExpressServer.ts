@@ -14,6 +14,7 @@ export const startExpressServer = (port: number = 3000): Application => {
   app.use(bodyParser.urlencoded({ extended: false }));
 
   const PORT = process.env.PORT || port;
+  // eslint-disable-next-line no-console
   app.listen(PORT, () => console.log(`[✓] Running on port ${PORT}`));
 
   return app;

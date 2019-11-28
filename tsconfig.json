@@ -1,9 +1,10 @@
 {
   "compilerOptions": { 
+    "target": "es3",
     "module": "commonjs", 
     "removeComments": true,
     "preserveConstEnums": true,
-    // "strict": true,
+    "strict": true,
     "outDir": "./dist",
     "declaration": true,
     "declarationMap": true,

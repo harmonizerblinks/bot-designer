@@ -1,10 +1,9 @@
 import { createMutableState } from 'mutablestate.js';
 import { Application } from 'express';
-import { Route, MessageCallback } from './render.interface';
+import { Route, MessageCallback, Plugin } from './render.interface';
 import { render } from './render';
 import { History } from './history.interface';
 import { startExpressServer } from '../utils/startExpressServer';
-import { Plugin } from '../utils/misc.interface';
 
 export const Superbot = (expressApplication?: Application) => {
   const app = expressApplication || startExpressServer();
@@ -26,7 +25,9 @@ export const Superbot = (expressApplication?: Application) => {
       historyCB = cb;
     },
     use: (plugin: Plugin): void => {
-      const messageCallback: MessageCallback = (opts) => render(historyState, routesState.get(), opts)();
+      const messageCallback: MessageCallback = (opts) => render(
+        historyState, routesState.get(), opts,
+      )();
       plugin(app, messageCallback);
     },
   };

@@ -1,5 +1,7 @@
 import { Route } from './render.interface';
 
+export const isCommand = (str: string): boolean => str.split(' ').length === 1 && str.charAt(0) === '/';
+
 export const guesstimateRoute = (routes: Route[], message: string): Route | undefined => {
   const updatedRoutes = routes.map((r) => ({
     paths: [
@@ -11,7 +13,7 @@ export const guesstimateRoute = (routes: Route[], message: string): Route | unde
   }))
     .map((r) => ({
       ...r,
-      paths: r.paths.reduce((acc, curr) => {
+      paths: r.paths.reduce((acc: string[], curr: string) => {
         if (curr.includes(' ') || curr === '**') {
           return [...acc, curr];
         }
@@ -36,5 +38,3 @@ export const guesstimateRoute = (routes: Route[], message: string): Route | unde
 
   return routes.find((r) => r.path === '**');
 };
-
-export const isCommand = (str: string): boolean => str.split(' ').length === 1 && str.charAt(0) === '/';

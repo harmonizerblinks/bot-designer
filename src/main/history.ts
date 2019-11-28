@@ -1,8 +1,10 @@
 import { CustomObject } from '../utils/misc.interface';
 import { History } from './history.interface';
 
-export const getUserHistory = (history: History[],
-  entityRef: string | number): History | undefined => history.find((h) => h.entityRef === entityRef);
+export const getUserHistory = (
+  history: History[],
+  entityRef: string | number,
+): History | undefined => history.find((h) => h.entityRef === entityRef);
 
 export const createUserHistory = (history: History[], entityRef: string | number): History[] => [
   ...history,
