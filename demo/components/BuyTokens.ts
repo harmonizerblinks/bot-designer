@@ -1,4 +1,5 @@
 import { Component } from '../../src';
+import { validateMeterNumber } from '../utils/validations';
 
 export const BuyTokens: Component = (props) => {
   const steps = ['INIT', 'REQUEST_FOR_METER_NUMBER', 'REQUEST_AMOUNT', 'CONFIRM'];
@@ -16,15 +17,15 @@ export const BuyTokens: Component = (props) => {
       break;
 
     case 'REQUEST_FOR_METER_NUMBER':
-      const meterNumber = parseInt(props.text, 10);
-      if (isNaN(meterNumber) || meterNumber.toString().length !== 11) {
+      const isValid = validateMeterNumber(props.text);
+      if (!isValid) {
         props.onSendMessage(`Please enter a valid 11-digit Meter Number ${hint}`);
         return;
       }
 
       props.history.setState({
         ...props.history.getState(),
-        meterNumber,
+        meterNumber: parseInt(props.text, 10),
       });
       props.onSendMessage(`Please enter the amount in KES ${hint}`);
       flow.next();

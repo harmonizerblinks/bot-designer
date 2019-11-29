@@ -1,5 +1,5 @@
 import { Application } from 'express';
-import { SendMessageOptions } from 'node-telegram-bot-api';
+import { SendMessageOptions, SendPhotoOptions, Message } from 'node-telegram-bot-api';
 import { CustomObject } from '../utils/misc.interface';
 import { HistoryController } from '../history/historyController.interface';
 
@@ -20,6 +20,7 @@ export interface MessageOptions {
   text: string;
   channel: Channel;
   onSendMessage: OnSendMessage;
+  onSendPhoto?: (photo: string | Buffer, opts: SendPhotoOptions) => Promise<Message>;
 }
 
 export type Channel = 'WHATSAPP' | 'TELEGRAM' | 'USSD';
