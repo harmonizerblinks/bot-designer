@@ -1,7 +1,6 @@
 import { Component } from '../../src';
 import { validateMeterNumber } from '../utils/validations';
 import { getMeterBill } from '../utils/getMeterBill';
-import { readFile } from '../utils/files';
 
 export const MeterQuery: Component = async (props) => {
   const steps = ['INIT', 'REQUEST_METER_NUMBER'];
@@ -30,19 +29,17 @@ export const MeterQuery: Component = async (props) => {
       props.onSendMessage('Please wait while your request is processing... \nThis may take up to 2 mins.');
 
       const { meterNumber } = props.history.getState();
+
       flow.end();
 
       if (props.onSendPhoto) {
         const filePath = await getMeterBill(meterNumber);
 
-        const buffer = await readFile(filePath);
-
-        props.onSendPhoto(buffer, {
-          caption: 'Here is your Account/Meter Search Result',
-        });
-
-        // TODO: delete photo
+        props.onSendPhoto(`https://tkimathi.ngrok.io/static/${filePath}`,
+          'Here is your Account/Meter Search Result');
       }
+
+      // TODO: delete photo
       break;
   }
 };

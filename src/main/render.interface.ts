@@ -1,5 +1,6 @@
 import { Application } from 'express';
-import { SendMessageOptions, SendPhotoOptions, Message } from 'node-telegram-bot-api';
+import { SendMessageOptions, Message } from 'node-telegram-bot-api';
+import { MessageInstance } from 'twilio/lib/rest/api/v2010/account/message';
 import { CustomObject } from '../utils/misc.interface';
 import { HistoryController } from '../history/historyController.interface';
 
@@ -20,7 +21,7 @@ export interface MessageOptions {
   text: string;
   channel: Channel;
   onSendMessage: OnSendMessage;
-  onSendPhoto?: (photo: string | Buffer, opts: SendPhotoOptions) => Promise<Message>;
+  onSendPhoto?: (photoUrl: string, caption: string) => Promise<Message | MessageInstance>;
 }
 
 export type Channel = 'WHATSAPP' | 'TELEGRAM' | 'USSD';

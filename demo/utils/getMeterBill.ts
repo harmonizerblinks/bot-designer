@@ -8,7 +8,7 @@ export const getMeterBill = async (meterNumber: string): Promise<string> => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  await page.goto(url)
+  await page.goto(url, { waitUntil: 'domcontentloaded' })
   
   await page.setViewport({ width: 1368, height: 669 })
   

@@ -7,13 +7,6 @@ import { MessageCallback } from '../main/render.interface';
 // https://www.twilio.com/console/sms/whatsapp/sandbox
 // https://www.twilio.com/docs/sms/whatsapp/api
 
-const sendMessage = async (client: Twilio, twilioChannel: string, from: string,
-  text: string): Promise<MessageInstance> => client.messages.create({
-  from: twilioChannel,
-  body: text,
-  to: `whatsapp:${from}`,
-});
-
 const MessageHandler = (client: Twilio, twilioChannel: string, cb: MessageCallback) => (
   req: Request, res: Response,
 ): void => {
@@ -27,8 +20,17 @@ const MessageHandler = (client: Twilio, twilioChannel: string, cb: MessageCallba
     from,
     text: formattedText,
     channel: 'WHATSAPP',
-    onSendMessage: (text: string): Promise<MessageInstance> => sendMessage(client,
-      twilioChannel, from, text),
+    onSendMessage: (text: string): Promise<MessageInstance> => client.messages.create({
+      from: twilioChannel,
+      body: text,
+      to: `whatsapp:${from}`,
+    }),
+    onSendPhoto: async (photoUrl, caption) => client.messages.create({
+      from: twilioChannel,
+      body: caption,
+      to: `whatsapp:${from}`,
+      mediaUrl: photoUrl,
+    }),
   });
 };
 

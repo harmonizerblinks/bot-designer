@@ -15,7 +15,7 @@ export const telegramPlugin = (token: string) => (_app: Application, cb: Message
       channel: 'TELEGRAM',
       onSendMessage: (text, opts): Promise<Message> => bot.sendMessage(chatId,
         text, (opts && opts.telegram) || { parse_mode: 'Markdown' }),
-      onSendPhoto: (photo, opts) => bot.sendPhoto(chatId, photo, opts),
+      onSendPhoto: (photoUrl, caption) => bot.sendPhoto(chatId, photoUrl, { caption }),
     });
   });
 };

@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import { getRootPath } from './misc';
 
 export const startExpressServer = (port: number = 3000): Application => {
   const app: Application = express();
@@ -12,6 +13,8 @@ export const startExpressServer = (port: number = 3000): Application => {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
+
+  app.use('/static', express.static(`${getRootPath()}`));
 
   const PORT = process.env.PORT || port;
   // eslint-disable-next-line no-console

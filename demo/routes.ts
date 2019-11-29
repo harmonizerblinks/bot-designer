@@ -7,10 +7,6 @@ import { PlannedInterruptions } from './components/PlannedInterruptions';
 import { ReportOutage } from './components/ReportOutage';
 import { Faq } from './components/Faq';
 
-// https://kplc.co.ke/content/item/30/Paying-your-Electricity-Bill
-// https://selfservice.kplc.co.ke/
-// https://kplc.co.ke/category/view/50/power-interruptions
-
 export const routes: Route[] = [
   {
     path: '**',
