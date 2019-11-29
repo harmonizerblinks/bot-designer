@@ -1,21 +1,32 @@
 import { MutableState } from 'mutablestate.js/dist/interface';
 import { CustomObject } from '../utils/misc.interface';
 import {
-  Route, HistoryLifecyle, Render, MessageOptions, DefaultProps, Middleware,
+  Route, Render, MessageOptions, DefaultProps, Middleware, Channel,
 } from './render.interface';
-import { History } from './history.interface';
-import { getUserHistory, createUserHistory, updateUserHistory } from './history';
-import { guesstimateRoute, isCommand } from './utils';
+import { History } from '../history/history.interface';
+import { getUserHistory, createUserHistory, updateUserHistory } from '../history/history';
+import { guesstimateRoute, isCommand, getTimeDiffInMins } from './utils';
+import { historyController } from '../history/historyController';
 
 const createHistoryForUserIfDoesNotExist = (historyState: MutableState<History[]>,
-  entityRef: string | number) => {
-  let userHistory: History = getUserHistory(historyState.get(), entityRef) as History;
+  entityRef: string | number, channel: Channel): History => {
+  let userHistory: History = getUserHistory(historyState.get(), entityRef, channel) as History;
 
   if (!userHistory) {
-    const newHistory = createUserHistory(historyState.get(), entityRef);
+    const newHistory = createUserHistory(historyState.get(), entityRef, channel);
     historyState.set(newHistory);
 
-    userHistory = getUserHistory(historyState.get(), entityRef) as History;
+    userHistory = getUserHistory(historyState.get(), entityRef, channel) as History;
+  }
+
+  if (getTimeDiffInMins(userHistory.updatedAt) > 15) {
+    const newHistory = updateUserHistory(historyState.get(), entityRef, {
+      path: '',
+      locked: false,
+      state: {},
+    });
+
+    historyState.set(newHistory);
   }
 
   return userHistory;
@@ -53,32 +64,15 @@ const getRoute = (historyState: MutableState<History[]>, routes: Route[], userHi
   return route;
 };
 
-const createHistoryLifecycle = (historyState: MutableState<History[]>, userHistory: History,
-  entityRef: string | number): HistoryLifecyle => ({
-  getLockStatus: () => (getUserHistory(historyState.get(), entityRef) as History).locked,
-  lock: (): void => {
-    const newHistory = updateUserHistory(historyState.get(), entityRef, { locked: true });
-    historyState.set(newHistory);
-  },
-  unlock: (): void => {
-    const newHistory = updateUserHistory(historyState.get(), entityRef, { locked: false });
-    historyState.set(newHistory);
-  },
-  getState: () => (getUserHistory(historyState.get(), entityRef) as History).state,
-  setState: (state: CustomObject): void => {
-    const newHistory = updateUserHistory(historyState.get(), entityRef, { state });
-    historyState.set(newHistory);
-  },
-});
-
 export const render = (historyState: MutableState<History[]>, routes: Route[],
   primaryProps: MessageOptions): Render => (text = primaryProps.text, secondaryProps = {}) => {
   const { from } = primaryProps;
 
-  const userHistory: History = createHistoryForUserIfDoesNotExist(historyState, from);
+  const userHistory: History = createHistoryForUserIfDoesNotExist(historyState,
+    from, primaryProps.channel);
   const route: Route | undefined = getRoute(historyState, routes, userHistory, from, text);
 
-  if (!route) {
+  if (!route || !route.component || typeof route.component !== 'function') {
     throw new Error('Invalid route: Missing component');
   }
 
@@ -86,41 +80,38 @@ export const render = (historyState: MutableState<History[]>, routes: Route[],
     ...primaryProps,
     ...secondaryProps,
     render: render(historyState, routes, primaryProps),
-    history: createHistoryLifecycle(historyState, userHistory, from),
+    history: historyController(historyState, from, primaryProps.channel,
+      text, primaryProps.onSendMessage),
   };
 
   let updatedProps: CustomObject = props;
 
-  if (route && route.component && typeof route.component === 'function') {
-    // eslint-disable-next-line consistent-return
-    (async (): Promise<void> => {
-      if (route.middleware) {
-        const middleware: Middleware[] = route.middleware as any;
+  // eslint-disable-next-line consistent-return
+  (async (): Promise<void> => {
+    if (route.middleware) {
+      const middleware: Middleware[] = route.middleware as any;
 
-        for (let i = 0; i < middleware.length; i += 1) {
-          const m = middleware[i];
+      for (let i = 0; i < middleware.length; i += 1) {
+        const m = middleware[i];
 
-          if (typeof m !== 'function') {
-            return Promise.resolve();
-          }
+        if (typeof m !== 'function') {
+          return Promise.resolve();
+        }
 
-          let shouldContinue: boolean = false;
+        let shouldContinue: boolean = false;
 
-          // eslint-disable-next-line no-await-in-loop, no-loop-func
-          await m(updatedProps, (moreProps?: CustomObject): void => {
-            updatedProps = { ...updatedProps, ...(moreProps || {}) };
-            shouldContinue = true;
-          });
+        // eslint-disable-next-line no-await-in-loop, no-loop-func
+        await m(updatedProps, (moreProps?: CustomObject): void => {
+          updatedProps = { ...updatedProps, ...(moreProps || {}) };
+          shouldContinue = true;
+        });
 
-          if (!shouldContinue) {
-            break;
-          }
+        if (!shouldContinue) {
+          break;
         }
       }
-    })();
+    }
+  })();
 
-    route.component(updatedProps as any);
-  } else {
-    throw new Error('Invalid route: Missing component');
-  }
+  route.component(updatedProps as any);
 };

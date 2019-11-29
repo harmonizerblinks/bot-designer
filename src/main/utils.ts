@@ -1,6 +1,7 @@
 import { Route } from './render.interface';
 
-export const isCommand = (str: string): boolean => str.split(' ').length === 1 && str.charAt(0) === '/';
+export const isCommand = (str: string): boolean => str.split(' ').length === 1
+  && str.charAt(0) === '/';
 
 export const guesstimateRoute = (routes: Route[], message: string): Route | undefined => {
   const updatedRoutes = routes.map((r) => ({
@@ -38,3 +39,7 @@ export const guesstimateRoute = (routes: Route[], message: string): Route | unde
 
   return routes.find((r) => r.path === '**');
 };
+
+export const getTimeDiffInMins = (
+  start: string,
+): number => (new Date().getTime() - new Date(start).getTime()) / (60 * 1000);

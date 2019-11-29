@@ -48,68 +48,6 @@ export const routes: Route[] = [
     component: Faq,
   },
   // {
-  //   path: 'signup',
-  //   aliases: ['sign up', 'create account'],
-  //   component: (prop) => {
-  //     if (prop.text === 'cancel') {
-  //       prop.history.unlock();
-  //       prop.history.setState({});
-  //     }
-
-  //     if (isEmptyObject(prop.history.getState())) {
-  //       prop.history.lock();
-  //       prop.onSendMessage('Please enter your username');
-
-  //       prop.history.setState({
-  //         step: 'REQUEST_USERNAME',
-  //         username: null,
-  //         emailAddress: null,
-  //       });
-
-  //       return;
-  //     }
-
-  //     if (prop.history.getState().step === 'REQUEST_USERNAME') {
-  //       // validate
-  //       prop.history.setState({
-  //         ...prop.history.getState(),
-  //         step: 'REQUEST_EMAIL',
-  //         username: prop.text,
-  //       });
-
-  //       prop.onSendMessage('Please enter your email address');
-
-  //       return;
-  //     }
-
-  //     if (prop.history.getState().step === 'REQUEST_EMAIL') {
-  //       // validate
-
-  //       prop.history.setState({
-  //         ...prop.history.getState(),
-  //         emailAddress: prop.text,
-  //       });
-
-  //       const { username, emailAddress } = prop.history.getState();
-
-  //       prop.history.unlock();
-  //       prop.history.setState({});
-
-  //       prop.onSendMessage(`Hi username: ${username} email: ${emailAddress}`);
-  //     }
-  //   },
-  // },
-  // {
-  //   path: 'login',
-  //   aliases: ['log in', 'signin', 'sign in'],
-  //   component: async (props) => {
-  //     props.onSendMessage('Logging you in...');
-
-  //     await delay(2000);
-  //     props.onSendMessage('Logged in successfully :)');
-  //   },
-  // },
-  // {
   //   path: 'home',
   //   middleware: [
   //     async (props, next) => {
@@ -157,6 +95,9 @@ export const routes: Route[] = [
   // {
   //   path: 'bypass',
   //   component: (props) => {
+  //     props.onSendMessage('Requesting a bypass for you...');
+
+  //     await delay(2000);
   //     props.render('home', { userId: 123 });
   //   },
   // },

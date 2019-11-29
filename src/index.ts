@@ -7,5 +7,3 @@ export {
 export { whatsappPlugin } from './plugins/whatsappPlugin';
 export { telegramPlugin } from './plugins/telegramPlugin';
 export { ussdPlugin } from './plugins/ussdPlugin';
-
-export { isEmptyObject } from './utils/misc';

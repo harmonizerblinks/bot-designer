@@ -2,7 +2,7 @@ import { createMutableState } from 'mutablestate.js';
 import { Application } from 'express';
 import { Route, MessageCallback, Plugin } from './render.interface';
 import { render } from './render';
-import { History } from './history.interface';
+import { History } from '../history/history.interface';
 import { startExpressServer } from '../utils/startExpressServer';
 
 export const Superbot = (expressApplication?: Application) => {

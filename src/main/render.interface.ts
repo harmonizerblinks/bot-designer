@@ -1,6 +1,7 @@
 import { Application } from 'express';
 import { SendMessageOptions } from 'node-telegram-bot-api';
 import { CustomObject } from '../utils/misc.interface';
+import { HistoryController } from '../history/historyController.interface';
 
 export type Render = (text?: string, props?: CustomObject) => void;
 
@@ -14,20 +15,16 @@ export interface Route {
 export type Middleware = (props: CustomObject, next: (props?: CustomObject) => void) => void;
 export type Component = (props: DefaultProps) => void;
 
-export interface HistoryLifecyle {
-  getLockStatus(): boolean;
-  lock(): void;
-  unlock(): void;
-  getState(): CustomObject;
-  setState(state: CustomObject): void;
-}
-
 export interface MessageOptions {
   from: string | number;
   text: string;
-  channel: 'WHATSAPP' | 'TELEGRAM' | 'USSD';
-  onSendMessage: (text: string, opts?: Opts) => Promise<any>;
+  channel: Channel;
+  onSendMessage: OnSendMessage;
 }
+
+export type Channel = 'WHATSAPP' | 'TELEGRAM' | 'USSD';
+
+export type OnSendMessage = (text: string, opts?: Opts) => Promise<any>;
 
 interface Opts {
   telegram?: SendMessageOptions;
@@ -38,7 +35,7 @@ interface Opts {
 
 export interface DefaultProps extends MessageOptions {
   render: Render;
-  history: HistoryLifecyle;
+  history: HistoryController;
 }
 
 export type MessageCallback = (opts: MessageOptions) => void;

@@ -3,40 +3,44 @@ import { Component } from '../../src';
 // https://kplc.co.ke/category/view/27/faqs
 
 export const Faq: Component = (props) => {
-  let { text } = props;
-  if (props.channel === 'USSD') {
-    text = text.split('*').slice(-1)[0];
+  const steps = ['INIT', 'SELECT_QUESTION'];
+  const flow = props.history.createFlow(steps, 'cancel', 'You have cancelled the FAQ request');
+  flow.start();
+
+  switch (flow.getCurrentStep()) {
+    case 'INIT':
+      let msg = 'Frequently Asked Questions (FAQ)\n';
+      msg += faqs
+        .map((f) => f.title)
+        .map((t, idx) => `\n${idx + 1}: ${t}`)
+        .join('');
+
+      props.onSendMessage(msg);
+      flow.next();
+      break;
+
+    case 'SELECT_QUESTION':
+      let { text } = props;
+      if (props.channel === 'USSD') {
+        text = text.split('*').slice(-1)[0];
+      }
+
+      const idx = parseInt(text, 10);
+
+      if (isNaN(idx)) {
+        props.render(props.text);
+        return;
+      }
+
+      if (idx > faqs.length) {
+        props.render('**');
+        return;
+      }
+
+      props.onSendMessage(`${faqs[idx - 1].title} \n\n${faqs[idx - 1].body}`);
+      flow.end();
+      break;
   }
-
-  let msg: string = '';
-
-  if (!props.history.getLockStatus()) {
-    props.history.lock();
-
-    msg = 'Frequently Asked Questions (FAQ)\n';
-    msg += faqs
-      .map((f) => f.title)
-      .map((t, idx) => `\n${idx + 1}: ${t}`)
-      .join('');
-  } else {
-    props.history.unlock();
-
-    const idx = parseInt(text, 10);
-
-    if (isNaN(idx)) {
-      props.render(props.text);
-      return;
-    }
-
-    if (idx > faqs.length) {
-      props.render('**');
-      return;
-    }
-
-    msg = `${faqs[idx - 1].title} \n\n${faqs[idx - 1].body}`;
-  }
-
-  props.onSendMessage(msg);
 };
 
 const faqs = [

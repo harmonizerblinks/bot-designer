@@ -1,16 +1,23 @@
 import { CustomObject } from '../utils/misc.interface';
 import { History } from './history.interface';
+import { Channel } from '../main/render.interface';
 
 export const getUserHistory = (
   history: History[],
   entityRef: string | number,
-): History | undefined => history.find((h) => h.entityRef === entityRef);
+  channel: Channel,
+): History | undefined => history.find((h) => h.entityRef === entityRef && h.channel === channel);
 
-export const createUserHistory = (history: History[], entityRef: string | number): History[] => [
+export const createUserHistory = (
+  history: History[],
+  entityRef: string | number,
+  channel: Channel,
+): History[] => [
   ...history,
   {
     id: history.length + 1,
     entityRef,
+    channel,
     path: '',
     locked: false,
     state: {},
