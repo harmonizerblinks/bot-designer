@@ -1,4 +1,4 @@
-import { Component } from '../../src';
+import { Component } from '../../../src';
 
 // https://kplc.co.ke/category/view/27/faqs
 
@@ -39,6 +39,11 @@ export const Faq: Component = (props) => {
 
       props.onSendMessage(`${faqs[idx - 1].title} \n\n${faqs[idx - 1].body}`);
       flow.end();
+      break;
+
+    default:
+      flow.end();
+      props.onSendMessage('Something went wrong...');
       break;
   }
 };

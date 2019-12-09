@@ -14,7 +14,7 @@ export const startExpressServer = (port: number = 3000): Application => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
-  app.use('/static', express.static(`${getRootPath()}`));
+  app.use('/', express.static(getRootPath()));
 
   const PORT = process.env.PORT || port;
   // eslint-disable-next-line no-console

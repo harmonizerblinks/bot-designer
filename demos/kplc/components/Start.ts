@@ -1,4 +1,4 @@
-import { Component } from '../../src';
+import { Component } from '../../../src';
 
 export const Start: Component = (props) => {
   let msg = 'Welcome to KPLC Selfcare';

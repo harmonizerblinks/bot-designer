@@ -1,4 +1,4 @@
-import { Component } from '../../src';
+import { Component } from '../../../src';
 
 // https://kplc.co.ke/category/view/50/power-interruptions
 

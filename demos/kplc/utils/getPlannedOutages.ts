@@ -6,7 +6,7 @@ export const getPlannedOutages = async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  await page.goto(url)
-  
-  await page.setViewport({ width: 1368, height: 669 })
+  await page.goto(url);
+
+  await page.setViewport({ width: 1368, height: 669 });
 };

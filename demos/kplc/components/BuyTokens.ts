@@ -1,4 +1,4 @@
-import { Component } from '../../src';
+import { Component } from '../../../src';
 import { validateMeterNumber } from '../utils/validations';
 
 export const BuyTokens: Component = (props) => {
@@ -54,7 +54,7 @@ export const BuyTokens: Component = (props) => {
         props.onSendMessage(`Please reply with either YES or NO ${hint}`);
         return;
       }
-      
+
       if (text === 'Y' || text === 'YES') {
         const { meterNumber, amount } = props.history.getState();
         const successMessage = `You have successfully bought tokens worth KES ${amount} for Meter No. ${meterNumber}.`;
@@ -63,7 +63,7 @@ export const BuyTokens: Component = (props) => {
       } else {
         props.onSendMessage(exitMessage);
       }
-      
+
       flow.end();
       break;
   }

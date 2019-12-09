@@ -9,7 +9,11 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/@customTypes/*"]
+    }
   },
   "include": [
     "typings/index.d.ts",
@@ -17,6 +21,7 @@
     "test/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/@customTypes"
   ]
 }

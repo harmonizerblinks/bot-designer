@@ -1,4 +1,4 @@
-import { Route } from '../src';
+import { Route } from '../../src';
 import { Start } from './components/Start';
 import { NotFound } from './components/NotFound';
 import { BuyTokens } from './components/BuyTokens';

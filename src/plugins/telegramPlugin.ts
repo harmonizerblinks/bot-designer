@@ -16,6 +16,14 @@ export const telegramPlugin = (token: string) => (_app: Application, cb: Message
       onSendMessage: (text, opts): Promise<Message> => bot.sendMessage(chatId,
         text, (opts && opts.telegram) || { parse_mode: 'Markdown' }),
       onSendPhoto: (photoUrl, caption) => bot.sendPhoto(chatId, photoUrl, { caption }),
+      onSendAudio: (audioUrl, caption) => bot.sendAudio(chatId, audioUrl, { caption }),
+      onSendVideo: (videoUrl, caption) => bot.sendVideo(chatId, videoUrl, { caption }),
+      onSendDocument: (documentUrl, caption) => bot.sendDocument(chatId, documentUrl, { caption }),
+      onSendContact: (phoneNumber, firstName, lastName) => bot.sendContact(chatId, phoneNumber,
+        firstName, {
+          last_name: lastName,
+        }),
+      onSendLocation: (latitude, longitude) => bot.sendLocation(chatId, latitude, longitude),
     });
   });
 };

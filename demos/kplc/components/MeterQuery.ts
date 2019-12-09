@@ -1,4 +1,4 @@
-import { Component } from '../../src';
+import { Component } from '../../../src';
 import { validateMeterNumber } from '../utils/validations';
 import { getMeterBill } from '../utils/getMeterBill';
 
@@ -35,7 +35,7 @@ export const MeterQuery: Component = async (props) => {
       if (props.onSendPhoto) {
         const filePath = await getMeterBill(meterNumber);
 
-        props.onSendPhoto(`https://tkimathi.ngrok.io/static/${filePath}`,
+        props.onSendPhoto(`https://tkimathi.ngrok.io/${filePath}`,
           'Here is your Account/Meter Search Result');
       }
 

@@ -21,10 +21,15 @@ export interface MessageOptions {
   text: string;
   channel: Channel;
   onSendMessage: OnSendMessage;
-  onSendPhoto?: (photoUrl: string, caption: string) => Promise<Message | MessageInstance>;
+  onSendPhoto?: (photoUrl: string, caption?: string) => Promise<Message | MessageInstance>;
+  onSendAudio?: (audioUrl: string, caption?: string) => Promise<any>;
+  onSendVideo?: (videoUrl: string, caption?: string) => Promise<any>;
+  onSendDocument?: (documentUrl: string, caption?: string) => Promise<any>;
+  onSendContact?: (phoneNumber: string, firstName: string, lastName?: string) => Promise<any>;
+  onSendLocation?: (latitude: number, longitude: number) => Promise<any>;
 }
 
-export type Channel = 'WHATSAPP' | 'TELEGRAM' | 'USSD';
+export type Channel = 'WHATSAPP' | 'TELEGRAM' | 'USSD' | 'SMS';
 
 export type OnSendMessage = (text: string, opts?: Opts) => Promise<any>;
 
