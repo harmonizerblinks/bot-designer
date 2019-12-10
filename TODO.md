@@ -1,8 +1,25 @@
 # TODO
 
-- sms
-- ussd
+- 37163747746
 
+## general
+
+- Use v.gd instead of bit.ly (+ remove access token)
+- Generic buttons schema (bottom, inline, datepickers/cards)
+- git submodules; npm init
+- menus: 1,2,3, ...
+- ? subrouting
+- Other demos: kplc, loan, uber/safiri, etc.
+
+## ussd
+
+- ussd: *2*meee*
+- ussd: showNavMenu?: boolean
+- ussd: strip markdown/up for ussd
+
+## Channels
+
+- ussd
 - fb
 - slack
 
@@ -11,18 +28,3 @@
 - viber
 - voice
 - web
-
-- - subrouting
-- - menus: 1,2,3, ...
-
-- ussd: *2*meee*
-- ussd: showNavMenu?: boolean
-- ussd: strip markdown/up for ussd
-
-- 37163747746
-
-- move to components/
-- git submodules; npm init
-- buttons (< main menu, send *)
-
-- config : bit.ly token => v.gd
