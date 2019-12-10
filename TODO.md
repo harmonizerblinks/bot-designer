@@ -6,6 +6,7 @@
 
 - Use v.gd instead of bit.ly (+ remove access token)
 - Generic buttons schema (bottom, inline, datepickers/cards)
+  - add telegram buttons
 - git submodules; npm init
 - menus: 1,2,3, ...
 - ? subrouting
