@@ -16,20 +16,38 @@ const MessageHandler = (client: Twilio, twilioChannel: string, cb: MessageCallba
   const formattedText = rawText.trim() || 'start';
   const from = sender && sender.split('whatsapp:')[1];
 
+  const sendMedia = async (url: string, caption?: string) => client.messages.create({
+    from: twilioChannel,
+    body: caption,
+    to: `whatsapp:${from}`,
+    mediaUrl: url,
+  });
+
   cb({
     from,
     text: formattedText,
     channel: 'WHATSAPP',
-    onSendMessage: (text: string): Promise<MessageInstance> => client.messages.create({
+    onSendMessage: async (text: string): Promise<MessageInstance> => client.messages.create({
       from: twilioChannel,
       body: text,
       to: `whatsapp:${from}`,
     }),
-    onSendPhoto: async (photoUrl, caption) => client.messages.create({
+    onSendPhoto: sendMedia,
+    onSendAudio: sendMedia,
+    onSendVideo: sendMedia,
+    onSendDocument: sendMedia,
+    onSendContact: (phoneNumber, firstName, lastName) => client.messages.create({
       from: twilioChannel,
-      body: caption,
+      body: `*${firstName}${lastName ? (` ${lastName}`) : ''}*\n${phoneNumber}`,
       to: `whatsapp:${from}`,
-      mediaUrl: photoUrl,
+    }),
+    onSendLocation: (latitude, longitude) => client.messages.create({
+      from: twilioChannel,
+      to: `whatsapp:${from}`,
+      body: ' ',
+      persistentAction: [
+        `geo:${latitude},${longitude}`,
+      ],
     }),
   });
 };

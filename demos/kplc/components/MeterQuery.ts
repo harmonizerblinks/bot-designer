@@ -10,12 +10,13 @@ export const MeterQuery: Component = async (props) => {
   flow.start();
 
   switch (flow.getCurrentStep()) {
-    case 'INIT':
+    case 'INIT': {
       props.onSendMessage(`Please enter your Meter No. ${hint}`);
       flow.next();
       break;
+    }
 
-    case 'REQUEST_METER_NUMBER':
+    case 'REQUEST_METER_NUMBER': {
       const isValid = validateMeterNumber(props.text);
       if (!isValid) {
         props.onSendMessage(`Please enter a valid 11-digit Meter Number ${hint}`);
@@ -41,5 +42,12 @@ export const MeterQuery: Component = async (props) => {
 
       // TODO: delete photo
       break;
+    }
+
+    default: {
+      flow.end();
+      props.onSendMessage('Something went wrong...');
+      break;
+    }
   }
 };

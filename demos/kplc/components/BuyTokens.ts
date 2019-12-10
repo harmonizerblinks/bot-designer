@@ -11,12 +11,13 @@ export const BuyTokens: Component = (props) => {
   flow.start();
 
   switch (flow.getCurrentStep()) {
-    case 'INIT':
+    case 'INIT': {
       props.onSendMessage(`Please enter your Meter Number ${hint}`);
       flow.next();
       break;
+    }
 
-    case 'REQUEST_FOR_METER_NUMBER':
+    case 'REQUEST_FOR_METER_NUMBER': {
       const isValid = validateMeterNumber(props.text);
       if (!isValid) {
         props.onSendMessage(`Please enter a valid 11-digit Meter Number ${hint}`);
@@ -30,10 +31,11 @@ export const BuyTokens: Component = (props) => {
       props.onSendMessage(`Please enter the amount in KES ${hint}`);
       flow.next();
       break;
+    }
 
-    case 'REQUEST_AMOUNT':
+    case 'REQUEST_AMOUNT': {
       const amount = parseInt(props.text, 10);
-      if (isNaN(amount) || amount < 50) {
+      if (Number.isNaN(amount) || amount < 50) {
         props.onSendMessage(`Please enter an amount greater than KES 50 ${hint}`);
         return;
       }
@@ -45,8 +47,9 @@ export const BuyTokens: Component = (props) => {
       props.onSendMessage(`Please confirm you want to buy tokens with YES or NO ${hint}`);
       flow.next();
       break;
+    }
 
-    case 'CONFIRM':
+    case 'CONFIRM': {
       const { text: rawText } = props;
       const text = rawText.trim().toUpperCase();
 
@@ -66,5 +69,12 @@ export const BuyTokens: Component = (props) => {
 
       flow.end();
       break;
+    }
+
+    default: {
+      flow.end();
+      props.onSendMessage('Something went wrong...');
+      break;
+    }
   }
 };
