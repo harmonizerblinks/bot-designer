@@ -28,7 +28,7 @@ const MessageHandler = (cb: MessageCallback) => (req: Request,
   });
 };
 
-export const ussdPlugin = (path: string = '/webhook/ussd') => (app: Application,
+export const ussdPlugin = () => (app: Application,
   cb: MessageCallback): void => {
-  app.post(path, MessageHandler(cb));
+  app.post('/webhook/ussd', MessageHandler(cb));
 };

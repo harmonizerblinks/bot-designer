@@ -1,6 +1,18 @@
 import { Application, Request, Response } from 'express';
 import africastalking from 'africastalking';
 import { MessageCallback } from '../main/render.interface';
+import { shortenUrl } from '../utils/misc';
+
+const sendMedia = (sms: any, shortcode: string, from: string) => async (
+  url: string, caption: string = ' ',
+) => {
+  const shortUrl = await shortenUrl(url);
+  return sms.send({
+    from: shortcode,
+    message: `${shortUrl}\n${caption}`,
+    to: [from],
+  });
+};
 
 const MessageHandler = (sms: any, shortcode: string, cb: MessageCallback) => (
   req: Request, res: Response,
@@ -14,16 +26,23 @@ const MessageHandler = (sms: any, shortcode: string, cb: MessageCallback) => (
     from,
     text: formattedText,
     channel: 'SMS',
-    onSendMessage: async (text: string): Promise<any> => sms.send({
+    onSendMessage: (text) => sms.send({
       from: shortcode,
       message: text,
       to: [from],
     }),
-    onSendPhoto: async (photoUrl, caption) => sms.send({
+    onSendPhoto: sendMedia(sms, shortcode, from),
+    onSendAudio: sendMedia(sms, shortcode, from),
+    onSendVideo: sendMedia(sms, shortcode, from),
+    onSendDocument: sendMedia(sms, shortcode, from),
+    onSendContact: (phoneNumber, firstName, lastName) => sms.send({
       from: shortcode,
-      message: `${photoUrl}\n\n${caption}`,
+      message: `${firstName} ${lastName}\n${phoneNumber}`,
       to: [from],
     }),
+    onSendLocation: (latitude, longitude) => sendMedia(sms, shortcode, from)(
+      `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`,
+    ),
   });
 };
 

@@ -2,15 +2,11 @@ import { Route } from '../../src';
 
 const baseUrl = 'https://tkimathi.ngrok.io/demos/dummy/assets';
 
-// TODO: move to components/
-// TODO: git submodules; npm init
-// TODO: buttons (< main menu, send *)
-
 export const routes: Route[] = [
   {
     path: 'start',
     aliases: ['menu'],
-    component: (props) => props.onSendMessage(`Choose an option:
+    component: (props) => props.onSendMessage(`Hi, what would you like to do?
 - Send message
 - Send photo
 - Send audio
@@ -59,7 +55,7 @@ export const routes: Route[] = [
   },
   {
     path: 'document',
-    aliases: ['send document'],
+    aliases: ['send document', 'pdf', 'send pdf'],
     component: (props) => {
       if (props.onSendDocument) {
         props.onSendDocument(`${baseUrl}/document.pdf`, 'Here is your document');
