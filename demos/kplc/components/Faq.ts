@@ -40,10 +40,7 @@ export const Faq: Component = (props) => {
     }
 
     case 'SELECT_QUESTION': {
-      let { text } = props;
-      if (props.channel === 'USSD') {
-        ([text] = text.split('*').slice(-1));
-      }
+      const { text } = props;
 
       const idx = parseInt(text, 10);
 

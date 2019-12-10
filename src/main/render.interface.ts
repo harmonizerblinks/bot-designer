@@ -37,6 +37,7 @@ interface Opts {
   telegram?: SendMessageOptions;
   ussd?: {
     type: 'CON' | 'END';
+    showFooter: boolean;
   };
 }
 

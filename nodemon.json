@@ -2,5 +2,5 @@
   "watch": ["src", "demos"],
   "ext": "ts",
   "ignore": ["test/**/*.spec.ts"],
-  "exec": "ts-node ./demos/dummy/index.ts"
+  "exec": "ts-node ./demos/overview/index.ts"
 }

@@ -5,21 +5,24 @@ import { MessageCallback } from '../main/render.interface';
 const MessageHandler = (cb: MessageCallback) => (req: Request,
   res: Response): void => {
   const { phoneNumber: from, text: rawText } = req.body;
-  const formattedText = ussdRouter(rawText.trim(), '0', '00') || 'start';
+
+  const preFormattedText = ussdRouter(rawText.trim(), '00', '0') || 'start';
+  const [formattedText] = preFormattedText.split('*').slice(-1);
+
+  const footer = '\n\n0: Back\n00: Home';
 
   cb({
     from,
     text: formattedText,
     channel: 'USSD',
     onSendMessage: (text, opts) => {
-      const sendingOptions = (opts && opts.ussd) || { type: 'CON' };
+      const sendingOptions = (opts && opts.ussd) || { type: 'CON', showFooter: false };
       let msg = sendingOptions.type === 'CON'
         ? `CON ${text}`
         : `END ${text}`;
 
-      if (formattedText !== 'start' && sendingOptions.type !== 'END') {
-        msg += '\n\n00: Back';
-        msg += '\n0: Home';
+      if (sendingOptions.showFooter || (formattedText !== 'start' && sendingOptions.type !== 'END')) {
+        msg += footer;
       }
 
       res.send(msg);
