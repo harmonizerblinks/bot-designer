@@ -4,7 +4,6 @@ module.exports = {
     node: true,
   },
   extends: [
-    // 'airbnb-base',
     'airbnb-typescript/base',
   ],
   globals: {
