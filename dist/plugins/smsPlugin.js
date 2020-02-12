@@ -40,22 +40,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var africastalking_1 = __importDefault(require("africastalking"));
-var misc_1 = require("../utils/misc");
 var sendMedia = function (sms, shortcode, from) { return function (url, caption) {
     if (caption === void 0) { caption = ' '; }
     return __awaiter(void 0, void 0, void 0, function () {
-        var shortUrl;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4, misc_1.shortenUrl(url)];
-                case 1:
-                    shortUrl = _a.sent();
-                    return [2, sms.send({
-                            from: shortcode,
-                            message: shortUrl + "\n" + caption,
-                            to: [from],
-                        })];
-            }
+            return [2, sms.send({
+                    from: shortcode,
+                    message: url + "\n" + caption,
+                    to: [from],
+                })];
         });
     });
 }; };

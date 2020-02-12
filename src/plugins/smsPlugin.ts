@@ -1,18 +1,14 @@
 import { Application, Request, Response } from 'express';
 import africastalking from 'africastalking';
 import { MessageCallback } from '../main/render.interface';
-import { shortenUrl } from '../utils/misc';
 
 const sendMedia = (sms: any, shortcode: string, from: string) => async (
   url: string, caption: string = ' ',
-) => {
-  const shortUrl = await shortenUrl(url);
-  return sms.send({
-    from: shortcode,
-    message: `${shortUrl}\n${caption}`,
-    to: [from],
-  });
-};
+) => sms.send({
+  from: shortcode,
+  message: `${url}\n${caption}`,
+  to: [from],
+});
 
 const MessageHandler = (sms: any, shortcode: string, cb: MessageCallback) => (
   req: Request, res: Response,
