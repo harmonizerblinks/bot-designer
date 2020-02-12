@@ -1,6 +1,6 @@
 {
   "name": "@tawn33y/superbot",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A free utility for easy routing in USSD applications",
   "main": "dist/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
     "mutablestate.js": "^0.2.6",
     "node-telegram-bot-api": "^0.40.0",
     "twilio": "^3.39.4",
-    "ussd-router": "^0.1.4"
+    "ussd-router": "^0.1.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",
