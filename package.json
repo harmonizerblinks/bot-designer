@@ -1,7 +1,7 @@
 {
   "name": "@tawn33y/superbot",
-  "version": "0.1.2",
-  "description": "A free utility for easy routing in USSD applications",
+  "version": "0.1.4",
+  "description": "One bot manager, several channels (WA, TG, SMS, USSD, etc.)",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
