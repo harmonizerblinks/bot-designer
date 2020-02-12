@@ -16,7 +16,6 @@
     }
   },
   "include": [
-    "typings/index.d.ts",
     "src/**/*",
     "test/**/*"
   ],
