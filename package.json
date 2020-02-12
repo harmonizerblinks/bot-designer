@@ -1,6 +1,6 @@
 {
-  "name": "futurebot",
-  "version": "0.1.0",
+  "name": "@tawn33y/superbot",
+  "version": "0.1.1",
   "description": "A free utility for easy routing in USSD applications",
   "main": "dist/index.js",
   "scripts": {
