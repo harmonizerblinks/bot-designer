@@ -1,4 +1,4 @@
-import { Route } from './render.interface';
+import { Route } from './render.types';
 
 export const isCommand = (str: string): boolean => str.split(' ').length === 1
   && str.charAt(0) === '/';

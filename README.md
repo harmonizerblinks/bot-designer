@@ -1,1 +1,1 @@
-# superbot
+# bot-designer

@@ -1,5 +1,5 @@
-import { CustomObject } from '../utils/misc.interface';
-import { Channel } from '../main/render.interface';
+import { CustomObject } from '../utils/misc.types';
+import { Channel } from '../main/render.types';
 
 export interface History {
   id: number;

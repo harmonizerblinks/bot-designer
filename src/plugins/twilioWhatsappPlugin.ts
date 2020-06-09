@@ -1,6 +1,6 @@
 import { Request, Response, Application } from 'express';
 import twilio, { Twilio } from 'twilio';
-import { MessageCallback } from '../main/render.interface';
+import { MessageCallback } from '../main/render.types';
 
 // https://www.twilio.com/docs/sms/whatsapp/quickstart/node?code-sample=code-send-a-message-with-whatsapp-and-nodejs&code-language=Node.js&code-sdk-version=3.x
 // https://www.twilio.com/console/sms/whatsapp/sandbox
@@ -53,7 +53,7 @@ const MessageHandler = (client: Twilio, twilioChannel: string, cb: MessageCallba
   });
 };
 
-export const whatsappPlugin = (twilioChannel: string, accountSid: string,
+export const twilioWhatsappPlugin = (twilioChannel: string, accountSid: string,
   authToken: string) => (app: Application, cb: MessageCallback): void => {
   const client = twilio(accountSid, authToken);
 

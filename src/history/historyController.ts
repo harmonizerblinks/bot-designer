@@ -1,10 +1,10 @@
 import { MutableState } from 'mutablestate.js/dist/interface';
-import { HistoryController } from './historyController.interface';
+import { HistoryController } from './historyController.types';
 import { getUserHistory, updateUserHistory } from './history';
-import { History } from './history.interface';
-import { CustomObject } from '../utils/misc.interface';
+import { History } from './history.types';
+import { CustomObject } from '../utils/misc.types';
 import { isEmptyObject } from '../utils/misc';
-import { OnSendMessage, Channel } from '../main/render.interface';
+import { OnSendMessage, Channel } from '../main/render.types';
 
 // STATE
 const getState = (

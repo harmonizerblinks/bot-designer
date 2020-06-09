@@ -1,6 +1,6 @@
 import { Application, Request, Response } from 'express';
 import africastalking from 'africastalking';
-import { MessageCallback } from '../main/render.interface';
+import { MessageCallback } from '../main/render.types';
 
 const sendMedia = (sms: any, shortcode: string, from: string) => async (
   url: string, caption: string = ' ',
