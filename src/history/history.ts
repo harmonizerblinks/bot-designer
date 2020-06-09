@@ -1,4 +1,4 @@
-import { CustomObject } from '../utils/misc.types';
+import { FreeFormObject } from '../utils/misc.types';
 import { History } from './history.types';
 import { Channel } from '../main/render.types';
 
@@ -27,7 +27,7 @@ export const createUserHistory = (
 ];
 
 export const updateUserHistory = (history: History[], entityRef: string | number,
-  data: CustomObject): History[] => history.map((h) => {
+  data: FreeFormObject): History[] => history.map((h) => {
   if (h.entityRef === entityRef) {
     return {
       ...h,

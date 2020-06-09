@@ -1,5 +1,5 @@
 import { MutableState } from 'mutablestate.js/dist/interface';
-import { CustomObject } from '../utils/misc.types';
+import { FreeFormObject } from '../utils/misc.types';
 import {
   Route, Render, MessageOptions, DefaultProps, Middleware, Channel,
 } from './render.types';
@@ -84,7 +84,7 @@ export const render = (historyState: MutableState<History[]>, routes: Route[],
       text, primaryProps.onSendMessage),
   };
 
-  let updatedProps: CustomObject = props;
+  let updatedProps: FreeFormObject = props;
 
   // eslint-disable-next-line consistent-return
   (async (): Promise<void> => {
@@ -101,7 +101,7 @@ export const render = (historyState: MutableState<History[]>, routes: Route[],
         let shouldContinue: boolean = false;
 
         // eslint-disable-next-line no-await-in-loop, no-loop-func
-        await m(updatedProps, (moreProps?: CustomObject): void => {
+        await m(updatedProps, (moreProps?: FreeFormObject): void => {
           updatedProps = { ...updatedProps, ...(moreProps || {}) };
           shouldContinue = true;
         });

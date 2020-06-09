@@ -1,13 +1,13 @@
 {
   "name": "bot-designer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Bot designer for chat applications (Whatsapp, Telegram, SMS, USSD, etc.)",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
     "lint": "eslint --ext .ts ./",
     "ts-check": "tsc --noEmit -p  .",
-    "test": "echo \"Skipping tests: no test found.\" && exit 0",
+    "test": "jest",
     "pre-commit-message": "echo 'Please wait, running pre-commit checks...' && exit 0"
   },
   "husky": {
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "africastalking": "^0.4.7",
+    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -27,8 +28,10 @@
     "ussd-router": "^0.1.5"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/cors": "^2.8.6",
     "@types/express-serve-static-core": "^4.17.7",
+    "@types/jest": "^26.0.0",
     "@types/morgan": "^1.9.0",
     "@types/node": "^14.0.12",
     "@types/node-telegram-bot-api": "^0.40.3",
@@ -38,7 +41,9 @@
     "eslint-config-airbnb-typescript": "^8.0.2",
     "eslint-plugin-import": "^2.21.1",
     "husky": "^4.2.5",
+    "jest": "^26.0.1",
     "npm-run-all": "^4.1.5",
+    "ts-jest": "^26.1.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
