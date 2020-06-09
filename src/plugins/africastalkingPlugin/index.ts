@@ -8,9 +8,10 @@ const MessageHandler = (chat: any, credentials: Credentials, cb: MessageCallback
 ): void => {
   res.json({ ok: true });
 
-  const { Body: rawText, From: sender } = req.body;
-  const formattedText = rawText.trim() || 'start';
-  const to = sender && sender.split('whatsapp:')[1];
+  if (!req.body.entry || req.body.entry.status) return;
+
+  const { entry: { text: rawText, customerNumber: to } } = req.body;
+  const formattedText = rawText?.trim() || 'start';
 
   const channel = 'WhatsApp';
 
@@ -31,7 +32,5 @@ export const africastalkingPlugin = (credentials: Credentials) => (
   app: Application, cb: MessageCallback,
 ): void => {
   const chat = Chat(credentials);
-
-
   app.post('/webhook/africastalking/messages', MessageHandler(chat, credentials, cb));
 };

@@ -1,6 +1,6 @@
 {
   "name": "bot-designer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Bot designer for chat applications (Whatsapp, Telegram, SMS, USSD, etc.)",
   "main": "dist/index.js",
   "scripts": {
