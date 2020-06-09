@@ -1,4 +1,4 @@
-import { CustomObject } from '../utils/misc.interface';
+import { CustomObject } from '../utils/misc.types';
 
 export interface HistoryController {
   getState(): CustomObject;

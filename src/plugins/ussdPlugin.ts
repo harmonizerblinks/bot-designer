@@ -1,6 +1,6 @@
 import { Request, Response, Application } from 'express';
 import { ussdRouter } from 'ussd-router';
-import { MessageCallback } from '../main/render.interface';
+import { MessageCallback } from '../main/render.types';
 
 const MessageHandler = (cb: MessageCallback) => (req: Request,
   res: Response): void => {

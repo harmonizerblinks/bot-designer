@@ -1,8 +1,8 @@
 import { Application } from 'express';
 import { SendMessageOptions, Message } from 'node-telegram-bot-api';
 import { MessageInstance } from 'twilio/lib/rest/api/v2010/account/message';
-import { CustomObject } from '../utils/misc.interface';
-import { HistoryController } from '../history/historyController.interface';
+import { CustomObject } from '../utils/misc.types';
+import { HistoryController } from '../history/historyController.types';
 
 export type Render = (text?: string, props?: CustomObject) => void;
 

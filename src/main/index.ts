@@ -1,12 +1,12 @@
 import { createMutableState } from 'mutablestate.js';
 import { Application } from 'express';
-import { Route, MessageCallback, Plugin } from './render.interface';
+import { Route, MessageCallback, Plugin } from './render.types';
 import { render } from './render';
-import { History } from '../history/history.interface';
-import { startExpressServer } from '../utils/startExpressServer';
+import { History } from '../history/history.types';
+import { startServer } from '../utils/startServer';
 
-export const Superbot = (expressApplication?: Application) => {
-  const app = expressApplication || startExpressServer();
+export const BotDesigner = (expressApplication?: Application) => {
+  const app = expressApplication || startServer();
 
   const historyState = createMutableState<History[]>([]);
   const routesState = createMutableState<Route[]>([]);

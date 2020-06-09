@@ -1,48 +1,50 @@
 {
-  "name": "@tawn33y/superbot",
-  "version": "0.1.4",
-  "description": "One bot manager, several channels (WA, TG, SMS, USSD, etc.)",
+  "name": "bot-designer",
+  "version": "0.1.5",
+  "description": "Bot designer for chat applications (Whatsapp, Telegram, SMS, USSD, etc.)",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
     "lint": "eslint --ext .ts ./",
     "ts-check": "tsc --noEmit -p  .",
+    "test": "echo \"Skipping tests: no test found.\" && exit 0",
     "pre-commit-message": "echo 'Please wait, running pre-commit checks...' && exit 0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all pre-commit-message build lint ts-check"
+      "pre-commit": "npm-run-all pre-commit-message build lint ts-check test"
     }
   },
   "dependencies": {
-    "africastalking": "^0.4.4",
+    "africastalking": "^0.4.7",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "morgan": "^1.9.1",
+    "morgan": "^1.10.0",
     "mutablestate.js": "^0.2.6",
-    "node-telegram-bot-api": "^0.40.0",
-    "twilio": "^3.39.4",
+    "node-telegram-bot-api": "^0.50.0",
+    "twilio": "^3.45.0",
     "ussd-router": "^0.1.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",
-    "@types/morgan": "^1.7.37",
-    "@types/node": "^13.7.1",
-    "@types/node-telegram-bot-api": "^0.40.2",
-    "@typescript-eslint/eslint-plugin": "^2.16.0",
-    "@typescript-eslint/parser": "^2.16.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-typescript": "^6.3.1",
-    "eslint-plugin-import": "^2.20.0",
-    "husky": "^4.2.2",
+    "@types/express-serve-static-core": "^4.17.7",
+    "@types/morgan": "^1.9.0",
+    "@types/node": "^14.0.12",
+    "@types/node-telegram-bot-api": "^0.40.3",
+    "@typescript-eslint/eslint-plugin": "^3.2.0",
+    "@typescript-eslint/parser": "^3.2.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-plugin-import": "^2.21.1",
+    "husky": "^4.2.5",
     "npm-run-all": "^4.1.5",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tawn33y/superbot.git"
+    "url": "git+https://github.com/tawn33y/bot-designer.git"
   },
   "keywords": [
     "bot",
@@ -51,15 +53,14 @@
     "telegram",
     "whatsapp",
     "sms",
-    "ussd",
-    "africastalking"
+    "ussd"
   ],
-  "author": "K Tony <tawn33y@gmail.com> (https://twitter.com/tawn33y)",
+  "author": "Tony (https://twitter.com/tawn33y)",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/tawn33y/superbot/issues"
+    "url": "https://github.com/tawn33y/bot-designer/issues"
   },
-  "homepage": "https://github.com/tawn33y/superbot",
+  "homepage": "https://github.com/tawn33y/bot-designer",
   "engines": {
     "node": ">=6"
   }

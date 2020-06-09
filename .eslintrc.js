@@ -14,17 +14,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
+    project: './tsconfig.json',
   },
   plugins: [
     '@typescript-eslint',
   ],
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-    },
-  },
   rules: {
     'import/prefer-default-export': 'off',
   },

@@ -1,6 +1,6 @@
 import { Application } from 'express';
 import TelegramBot, { Message } from 'node-telegram-bot-api';
-import { MessageCallback } from '../main/render.interface';
+import { MessageCallback } from '../main/render.types';
 
 export const telegramPlugin = (token: string) => (_app: Application, cb: MessageCallback): void => {
   const bot = new TelegramBot(token, { polling: true });

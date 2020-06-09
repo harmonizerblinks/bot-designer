@@ -1,9 +1,9 @@
 import { MutableState } from 'mutablestate.js/dist/interface';
-import { CustomObject } from '../utils/misc.interface';
+import { CustomObject } from '../utils/misc.types';
 import {
   Route, Render, MessageOptions, DefaultProps, Middleware, Channel,
-} from './render.interface';
-import { History } from '../history/history.interface';
+} from './render.types';
+import { History } from '../history/history.types';
 import { getUserHistory, createUserHistory, updateUserHistory } from '../history/history';
 import { guesstimateRoute, isCommand, getTimeDiffInMins } from './utils';
 import { historyController } from '../history/historyController';

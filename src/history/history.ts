@@ -1,6 +1,6 @@
-import { CustomObject } from '../utils/misc.interface';
-import { History } from './history.interface';
-import { Channel } from '../main/render.interface';
+import { CustomObject } from '../utils/misc.types';
+import { History } from './history.types';
+import { Channel } from '../main/render.types';
 
 export const getUserHistory = (
   history: History[],
