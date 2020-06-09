@@ -62,6 +62,6 @@
   },
   "homepage": "https://github.com/tawn33y/bot-designer",
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   }
 }
