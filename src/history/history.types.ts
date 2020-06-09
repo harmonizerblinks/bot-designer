@@ -1,4 +1,4 @@
-import { CustomObject } from '../utils/misc.types';
+import { FreeFormObject } from '../utils/misc.types';
 import { Channel } from '../main/render.types';
 
 export interface History {
@@ -7,7 +7,7 @@ export interface History {
   channel: Channel;
   path: string;
   locked: boolean;
-  state: CustomObject;
+  state: FreeFormObject;
   createdAt: string;
   updatedAt: string;
 }

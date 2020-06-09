@@ -1,3 +1,3 @@
-export type CustomObject = {
+export type FreeFormObject = {
   [key: string]: any;
 };

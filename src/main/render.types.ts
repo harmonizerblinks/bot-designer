@@ -1,10 +1,10 @@
 import { Application } from 'express';
 import { SendMessageOptions, Message } from 'node-telegram-bot-api';
 import { MessageInstance } from 'twilio/lib/rest/api/v2010/account/message';
-import { CustomObject } from '../utils/misc.types';
+import { FreeFormObject } from '../utils/misc.types';
 import { HistoryController } from '../history/historyController.types';
 
-export type Render = (text?: string, props?: CustomObject) => void;
+export type Render = (text?: string, props?: FreeFormObject) => void;
 
 export interface Route {
   path: string;
@@ -13,7 +13,7 @@ export interface Route {
   component: Component;
 }
 
-export type Middleware = (props: CustomObject, next: (props?: CustomObject) => void) => void;
+export type Middleware = (props: FreeFormObject, next: (props?: FreeFormObject) => void) => void;
 export type Component = (props: DefaultProps) => void;
 
 export interface MessageOptions {
@@ -29,7 +29,7 @@ export interface MessageOptions {
   onSendLocation?: (latitude: number, longitude: number) => Promise<any>;
 }
 
-export type Channel = 'WHATSAPP' | 'TELEGRAM' | 'USSD' | 'SMS';
+export type Channel = 'WHATSAPP' | 'TELEGRAM' | 'USSD' | 'SMS' | 'WhatsApp';
 
 export type OnSendMessage = (text: string, opts?: Opts) => Promise<any>;
 

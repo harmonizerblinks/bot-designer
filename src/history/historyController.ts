@@ -2,7 +2,7 @@ import { MutableState } from 'mutablestate.js/dist/interface';
 import { HistoryController } from './historyController.types';
 import { getUserHistory, updateUserHistory } from './history';
 import { History } from './history.types';
-import { CustomObject } from '../utils/misc.types';
+import { FreeFormObject } from '../utils/misc.types';
 import { isEmptyObject } from '../utils/misc';
 import { OnSendMessage, Channel } from '../main/render.types';
 
@@ -11,11 +11,11 @@ const getState = (
   historyState: MutableState<History[]>,
   entityRef: string | number,
   channel: Channel,
-): CustomObject => (getUserHistory(historyState.get(), entityRef, channel) as History).state;
+): FreeFormObject => (getUserHistory(historyState.get(), entityRef, channel) as History).state;
 
 const setState = (
   historyState: MutableState<History[]>, entityRef: string | number,
-  state: CustomObject,
+  state: FreeFormObject,
 ): void => {
   const newHistory = updateUserHistory(historyState.get(), entityRef, { state });
   historyState.set(newHistory);

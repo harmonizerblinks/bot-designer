@@ -1,8 +1,8 @@
-import { CustomObject } from '../utils/misc.types';
+import { FreeFormObject } from '../utils/misc.types';
 
 export interface HistoryController {
-  getState(): CustomObject;
-  setState(state: CustomObject): void;
+  getState(): FreeFormObject;
+  setState(state: FreeFormObject): void;
   createFlow(steps: string[], exitKeyword: string, exitMessage: string): {
     start: () => void,
     end: () => void,
