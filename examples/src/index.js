@@ -14,6 +14,6 @@ const {
 
 botDesigner.use(telegramPlugin(token));
 botDesigner.use(twilioWhatsappPlugin(channel, accountSid, authToken));
-botDesigner.use(atSmsPlugin(apiKey, username, shortcode));
-botDesigner.use(atUssdPlugin());
+// botDesigner.use(atSmsPlugin(apiKey, username, shortcode));
+// botDesigner.use(atUssdPlugin());
 botDesigner.use(atChatPlugin(apiKey, username, chat));
