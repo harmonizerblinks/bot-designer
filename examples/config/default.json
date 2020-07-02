@@ -1,0 +1,26 @@
+{
+  "twilio": {
+    "channel": "abcd",
+    "accountSid": "acbd",
+    "authToken": "abcd"
+  },
+  "telegram": {
+    "token": "abcd"
+  },
+  "africastalking": {
+    "apiKey": "abcd",
+    "username": "abcd",
+    "sms": {
+      "shortcode": "abcd"
+    },
+    "chat": {
+      "productId": "abcd",
+      "whatsapp": {
+        "channelNumber": "+2547XXXXXXXX"
+      },
+      "telegram": {
+        "channelNumber": "987654321"
+      }
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import { Application } from 'express';
-import TelegramBot, { Message } from 'node-telegram-bot-api';
+import TelegramBot from 'node-telegram-bot-api';
 import { MessageCallback } from '../main/render.types';
+import { FreeFormObject } from '../utils/misc.types';
+
+interface Message extends FreeFormObject {}
 
 export const telegramPlugin = (token: string) => (_app: Application, cb: MessageCallback): void => {
   const bot = new TelegramBot(token, { polling: true });

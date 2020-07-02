@@ -57,5 +57,5 @@ export const twilioWhatsappPlugin = (twilioChannel: string, accountSid: string,
   authToken: string) => (app: Application, cb: MessageCallback): void => {
   const client = twilio(accountSid, authToken);
 
-  app.post('/webhook/whatsapp', MessageHandler(client, twilioChannel, cb));
+  app.post('/webhook/twilio/whatsapp', MessageHandler(client, twilioChannel, cb));
 };
