@@ -10,10 +10,8 @@ const MessageHandler = (chat: any, credentials: Credentials, cb: MessageCallback
 
   if (!req.body.entry || req.body.entry.status) return;
 
-  const { entry: { text: rawText, customerNumber: to } } = req.body;
+  const { entry: { channel, customerNumber: to, text: rawText } } = req.body;
   const formattedText = rawText?.trim() || 'start';
-
-  const channel = 'WhatsApp';
 
   cb({
     from: (credentials as any)[channel.toLowerCase()].channelNumber,
