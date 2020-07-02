@@ -31,7 +31,8 @@ const MessageHandler = (cb: MessageCallback) => (req: Request,
   });
 };
 
-export const ussdPlugin = () => (app: Application,
-  cb: MessageCallback): void => {
-  app.post('/webhook/ussd', MessageHandler(cb));
+export const atUssdPlugin = () => (
+  app: Application, cb: MessageCallback,
+): void => {
+  app.post('/webhook/africastalking/ussd', MessageHandler(cb));
 };

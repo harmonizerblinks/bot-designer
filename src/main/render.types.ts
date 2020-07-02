@@ -1,5 +1,5 @@
 import { Application } from 'express';
-import { SendMessageOptions, Message } from 'node-telegram-bot-api';
+import { SendMessageOptions } from 'node-telegram-bot-api';
 import { MessageInstance } from 'twilio/lib/rest/api/v2010/account/message';
 import { FreeFormObject } from '../utils/misc.types';
 import { HistoryController } from '../history/historyController.types';
@@ -21,7 +21,7 @@ export interface MessageOptions {
   text: string;
   channel: Channel;
   onSendMessage: OnSendMessage;
-  onSendPhoto?: (photoUrl: string, caption?: string) => Promise<Message | MessageInstance>;
+  onSendPhoto?: (photoUrl: string, caption?: string) => Promise<FreeFormObject | MessageInstance>;
   onSendAudio?: (audioUrl: string, caption?: string) => Promise<any>;
   onSendVideo?: (videoUrl: string, caption?: string) => Promise<any>;
   onSendDocument?: (documentUrl: string, caption?: string) => Promise<any>;
