@@ -20,7 +20,8 @@ const MessageHandler = (client: AFRICASTALKING, options: ChatOptions, cb: Messag
 
   if (!req.body.entry || req.body.entry.status) return;
 
-  const { entry: { channel, customerNumber: to, text: rawText } } = req.body;
+  const { entry: { channel: rawChannel, customerNumber: to, text: rawText } } = req.body;
+  const channel = rawChannel.toLowerCase();
   const formattedText = rawText?.trim() || 'start';
 
   const { productId } = options;
